@@ -1,8 +1,7 @@
 # Alcontrar
 
-```
-Alcontrar: Trobar  bella  cosa  que  se  buscaba  u  trobar-la  por  azar: Noalcontraba  os  calzons  de  pana.
-```
+
+> Alcontrar: Trobar  bella  cosa  que  se  buscaba  u  trobar-la  por  azar: Noalcontraba  os  calzons  de  pana.
 
 Una manera de buscar en tu biblioteca los libros que te gustaría leer en GoodReads.
 
