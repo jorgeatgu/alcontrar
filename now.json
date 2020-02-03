@@ -1,0 +1,8 @@
+{
+  "build": {
+    "env": {
+      "VUE_APP_KEY": "@goodreads-key",
+      "VUE_APP_SECRET": "@goodreads-secret"
+    }
+  }
+}

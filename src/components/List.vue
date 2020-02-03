@@ -1,60 +1,72 @@
 <template>
-  <div>
+  <div class="container-empty">
+    <div
+      v-if="loader"
+      class="container-full"
+    >
+      <div class="container-spinner">
+        <div
+          class="spinner"
+        />
+      </div>
+    </div>
     <header class="alcontrar-header">
       <router-link
         class="nav-link nav-link-title"
         to="/"
       >
         <h2 class="alcontrar-title">
-          alcontrar
+          ALCONTRAR
         </h2>
-
-        <div class="alcontrar-container-options">
-          <label class="alcontrar-label-user">
-            Número de usuario
-          </label>
-          <input
-            class="alcontrar-input-user"
-            placeholder="23142423"
-            type="text"
-            @input="getUser($event.target.value)"
-          >
-        </div>
-        <div class="alcontrar-container-options">
-          <label class="alcontrar-label-user">
-            Ciudad
-          </label>
-          <v-select
-            class="alcontrar-select"
-            :options="cities"
-            @input="selectCity"
-          />
-          <button
-            :class="{ disabled: isDisabled }"
-            :disabled="isDisabled"
-            class="alcontrar-btn-load-list"
-            @click="loadList"
-          >
-            CARGAR LISTA
-          </button>
-        </div>
       </router-link>
+      <article class="grid-text">
+        <p class="text">
+          Introduce tu usuario de GoodReads. Y busca los libros de tu lista <i>Wants To Read</i> en la biblioteca municipal de tu ciudad(Zaragoza o Madrid).
+        </p>
+        <p class="text">
+          <span class="user-info">¿Cúal es mi usuario de Goodreads?</span>
+          Ve a tu perfil de GoodReads. En la dirección web saldrán una serie de números, eso es lo que necesitas.
+        </p>
+        <p class="text">
+          <span class="user-info">¿No esta tu ciudad?</span> Si me mandas la web de tu biblioteca municipal puedo intentar incluirla. Escríbeme un correo a data[@]jorgeatgu.com o  a través de <a href="https://twitter.com/jorgeatgu">Twitter</a>.
+        </p>
+      </article>
+      <article class="alcontrar-container-options">
+        <label class="alcontrar-label-user">
+          Número de usuario
+        </label>
+        <input
+          class="alcontrar-input-user"
+          placeholder="106928406"
+          type="text"
+          @input="getUser($event.target.value)"
+        >
+      </article>
+      <article class="alcontrar-container-options">
+        <label class="alcontrar-label-user">
+          Ciudad
+        </label>
+        <v-select
+          class="alcontrar-select"
+          :options="cities"
+          @input="selectCity"
+        />
+        <button
+          :class="{ disabled: isDisabled }"
+          :disabled="isDisabled"
+          class="alcontrar-btn-load-list"
+          @click="loadList"
+        >
+          CARGAR LISTA
+        </button>
+      </article>
     </header>
-    <div
-      v-if="loader"
-      class="container-spinner"
-    >
-      <p>Cargando tu lista...</p>
-      <div
-        class="spinner"
-      />
-    </div>
-    <div
-      v-if="items && userData && !loader"
+    <section
+      v-if="items && !loader && userData"
       class="container"
     >
-      <div class="container-btn-order">
-        <p>Hola {{ userData }}, aquí tienes tu lista de libros que quieres leer.</p>
+      <article class="container-btn-order">
+        <p class="text">Hola <strong>{{ userData }}</strong>, aquí tienes tu lista de libros que quieres leer. Suerte en la búsqueda.</p>
         <button
           class="alcontrar-btn-reorder"
           @click="reorderAlphabetic()"
@@ -67,13 +79,13 @@
         >
           ORDEN RATING
         </button>
-      </div>
+      </article>
       <Book
-        v-if="items && userData"
+        v-if="items"
         :items="items"
         :city-key="selected"
       />
-    </div>
+    </section>
   </div>
 </template>
 
@@ -90,13 +102,10 @@ export default {
   data () {
     return {
       key: process.env.VUE_APP_KEY,
-      title: process.env.VUE_APP_TITLE,
       secret: process.env.VUE_APP_SECRET,
-      user_id: process.env.VUE_APP_USER_ID,
-      version: process.env.VUE_APP_VERSION,
-      shelf: process.env.VUE_APP_SHELF,
+      shelf: 'to-read',
       url: '',
-      items: null,
+      items: undefined,
       userGoodReads: '',
       selected: '',
       cities: ['Zaragoza', 'Madrid'],
@@ -113,6 +122,12 @@ export default {
       } else {
         return true
       }
+    }
+  },
+  created() {
+    if (this.items === undefined) {
+      this.items = JSON.parse(localStorage.getItem('items') || "[]");
+      this.userData = JSON.parse(localStorage.getItem('userData'));
     }
   },
   methods: {
@@ -138,6 +153,8 @@ export default {
             } else {
               this.loader = false
               this.items = result.GoodreadsResponse.books[0].book
+              this.setItems()
+
             }
           })
         })
@@ -158,6 +175,7 @@ export default {
             } else {
               this.loader = false
               this.userData = result.GoodreadsResponse.user[0].name[0]
+              localStorage.setItem('userData', JSON.stringify(this.userData))
             }
           })
         })
@@ -206,6 +224,9 @@ export default {
     },
     reorderNumeric() {
       this.items.sort(this.sortRating)
+    },
+    setItems() {
+      localStorage.setItem('items', JSON.stringify(this.items))
     }
   }
 }
