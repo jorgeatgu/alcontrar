@@ -19,7 +19,7 @@
         </p>
         <a
           class="footer-links"
-          href="http://github.com/alcontrar"
+          href="https://github.com/jorgeatgu/alcontrar"
         >
           Todo el código y datos está disponible en GitHub
         </a>
