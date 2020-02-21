@@ -1,7 +1,10 @@
 <template>
   <div class="container-details">
     <header class="alcontrar-header">
-      <h2 @click="$router.go(-1)" class="alcontrar-title">
+      <h2
+        class="alcontrar-title"
+        @click="$router.go(-1)"
+      >
         ALCONTRAR
       </h2>
     </header>
@@ -9,7 +12,10 @@
       v-if="booksItems"
       class="container"
     >
-      <button @click="$router.go(-1)" class="alcontrar-btn-reorder">
+      <button
+        class="alcontrar-btn-reorder"
+        @click="$router.go(-1)"
+      >
         VOLVER A TU LISTA
       </button>
       <div class="card-details">
@@ -56,7 +62,11 @@
           <span
             v-if="booksItems.description[0] !== ''"
           >
-            <p class="card-details-description" v-html="booksItems.description[0]" />
+            <!-- eslint-disable vue/no-v-html -->
+            <p
+              class="card-details-description"
+              v-html="booksItems.description[0]"
+            />
           </span>
         </div>
       </div>
