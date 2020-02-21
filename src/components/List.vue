@@ -66,7 +66,9 @@
       class="container"
     >
       <article class="container-btn-order">
-        <p class="text">Hola <strong>{{ userData }}</strong>, aquí tienes tu lista de libros que quieres leer. Suerte en la búsqueda.</p>
+        <p class="text">
+          Hola <strong>{{ userData }}</strong>, aquí tienes tu lista de libros que quieres leer. Suerte en la búsqueda.
+        </p>
         <button
           class="alcontrar-btn-reorder"
           @click="reorderAlphabetic()"
