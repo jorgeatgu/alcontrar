@@ -1,7 +1,10 @@
 <template>
   <div class="container-details">
     <header class="alcontrar-header">
-      <h2 @click="$router.go(-1)" class="alcontrar-title">
+      <h2
+        class="alcontrar-title"
+        @click="$router.replace('/')"
+      >
         ALCONTRAR
       </h2>
     </header>
@@ -9,7 +12,10 @@
       v-if="booksItems"
       class="container"
     >
-      <button @click="$router.go(-1)" class="alcontrar-btn-reorder">
+      <button
+        class="alcontrar-btn-reorder"
+        @click="$router.replace('/')"
+      >
         VOLVER A TU LISTA
       </button>
       <div class="card-details">
@@ -56,7 +62,10 @@
           <span
             v-if="booksItems.description[0] !== ''"
           >
-            <p class="card-details-description" v-html="booksItems.description[0]" />
+            <p
+              class="card-details-description"
+              v-html="booksItems.description[0]"
+            />
           </span>
         </div>
       </div>
@@ -78,8 +87,8 @@ export default {
     return {
       searchCalamo: 'https://www.libreriacalamo.com/buscarlibros.php?Titulo=',
       searchBiblioteca: 'https://bibliotecas.aragon.es/cgi-bin/opac?SUBC=OPP/BPZ&ACC=DOSEARCH&xsqf99=',
-      booksItems: [],
-      index: 0
+      index: 0,
+      booksItems: []
     }
   },
   created() {

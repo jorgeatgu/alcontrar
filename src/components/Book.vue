@@ -90,7 +90,13 @@ export default {
       return elem
     },
     navTo(item, index) {
-      this.$router.push({ name: "element", params: { id: item.title[0], books: this.items[index] } })
+      this.$router.push({
+        name: "element",
+        params: {
+          id: item.title[0],
+          books: this.items[index]
+        }
+      })
     }
   }
 }

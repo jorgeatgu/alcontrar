@@ -21,7 +21,7 @@
       </router-link>
       <article class="grid-text">
         <p class="text">
-          Introduce tu usuario de GoodReads. Y busca los libros de tu lista <i>Wants To Read</i> en la biblioteca municipal de tu ciudad(Zaragoza o Madrid).
+          Busca los libros de tu lista <i>Wants To Read</i> en la biblioteca municipal de tu ciudad(Zaragoza o Madrid). Solamente tienes que introducir tu usuario de GoodReads.
         </p>
         <p class="text">
           <span class="user-info">¿Cúal es mi usuario de Goodreads?</span>
@@ -66,7 +66,9 @@
       class="container"
     >
       <article class="container-btn-order">
-        <p class="text">Hola <strong>{{ userData }}</strong>, aquí tienes tu lista de libros que quieres leer. Suerte en la búsqueda.</p>
+        <p class="text">
+          Hola <strong>{{ userData }}</strong>, aquí tienes los <strong>{{ items.length }}</strong> libros que quieres leer. Suerte en la búsqueda.
+        </p>
         <button
           class="alcontrar-btn-reorder"
           @click="reorderAlphabetic()"
@@ -103,16 +105,14 @@ export default {
     return {
       key: process.env.VUE_APP_KEY,
       secret: process.env.VUE_APP_SECRET,
-      shelf: 'to-read',
-      url: '',
-      items: undefined,
+      shelf: 'ALL',
+      items: [],
       userGoodReads: '',
       selected: '',
       cities: ['Zaragoza', 'Madrid'],
       userData: '',
       selectEnable: false,
-      loader: false,
-      userUrl: ''
+      loader: false
     }
   },
   computed: {
@@ -121,6 +121,14 @@ export default {
         return false
       } else {
         return true
+      }
+    }
+  },
+  watch: {
+    getUser(newValue, oldValue) {
+      if (newValue !== oldValue && oldValue !== undefined) {
+        localStorage.removeItem('items').removeItem('userData');
+        this.getData()
       }
     }
   },
@@ -139,22 +147,22 @@ export default {
         }
       }
 
-      this.url = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/review/list/${this.userGoodReads}.xml?key=${this.key}&v${this.v}&shelf=${this.shelf}&page=1&per_page=200`
-      this.userUrl = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/user/show/${this.userGoodReads}.xml?key=${this.key}`
+      const url = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/review/list/${this.userGoodReads}.xml?key=${this.key}&v=2&v=2&shelf=ALL&page=1&per_page=200`
+
       axios
         .get(
-            this.url,
+            url,
             config
         )
         .then(response => {
+          console.log(response.data)
           parseString(response.data, (err, result) => {
             if (err) {
               console.error(err)
             } else {
-              this.loader = false
-              this.items = result.GoodreadsResponse.books[0].book
+              this.items = result
+              console.log("this.items", this.items);
               this.setItems()
-
             }
           })
         })
@@ -162,10 +170,18 @@ export default {
           this.loader = false
           console.error(e.response)
         })
+    },
+    getDataUser() {
+      const config = {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      }
 
-        axios
+      const userUrl = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/user/show/${this.userGoodReads}.xml?key=${this.key}`
+      axios
         .get(
-            this.userUrl,
+            userUrl,
             config
         )
         .then(response => {
@@ -173,9 +189,9 @@ export default {
             if (err) {
               console.error(err)
             } else {
-              this.loader = false
               this.userData = result.GoodreadsResponse.user[0].name[0]
               localStorage.setItem('userData', JSON.stringify(this.userData))
+              this.loader = false
             }
           })
         })
@@ -184,11 +200,13 @@ export default {
           console.error(e.response)
         })
     },
-    loadList() {
+    async loadList() {
+      await this.getData()
+      await this.getDataUser()
       this.userData = [this.userGoodReads, this.selected]
-      this.getData()
     },
     getUser(userId) {
+      console.log("getUser -> userId", userId)
       this.userGoodReads = userId
     },
     selectCity(city) {
@@ -208,6 +226,7 @@ export default {
       return comparison;
     },
     sortRating(a, b) {
+
       const titleA = a.average_rating[0].toUpperCase();
       const titleB = b.average_rating[0].toUpperCase();
 
