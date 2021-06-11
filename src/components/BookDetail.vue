@@ -62,6 +62,7 @@
           <span
             v-if="booksItems.description[0] !== ''"
           >
+            <!-- eslint-disable vue/no-v-html -->
             <p
               class="card-details-description"
               v-html="booksItems.description[0]"
