@@ -7,25 +7,25 @@
     >
       <img
         class="card-image"
-        :src="item.image_url[0]"
+        :src="item.book[0].image_url[0]"
       >
       <div class="card-group">
         <span
           class="card-title"
           @click="navTo(item, index)"
-        >{{ item.title[0] }}
+        >{{ item.book[0].title[0] }}
         </span>
-        <span class="card-average">Puntuación <strong>{{ item.average_rating[0] }}</strong></span>
+        <span class="card-average">Puntuación <strong>{{ item.book[0].average_rating[0] }}</strong></span>
         <div v-if="cityKey === 'Zaragoza'">
           <a
             class="card-btn card-btn-calamo"
-            :href="searchCalamo + ignoreAccent(item.title[0])"
+            :href="searchCalamo + ignoreAccent(item.book[0].title[0])"
           >
             Calamo
           </a>
           <a
             class="card-btn card-btn-biblioteca"
-            @click="searchBiblioteca(item.title[0])"
+            @click="searchBiblioteca(item.book[0].title[0])"
           >
             Biblioteca
           </a>
@@ -33,7 +33,7 @@
         <div v-else-if="cityKey === 'Madrid'">
           <a
             class="card-btn card-btn-biblioteca"
-            @click="searchBiblioteca(item.title[0])"
+            @click="searchBiblioteca(item.book[0].title[0])"
           >
             Biblioteca
           </a>
@@ -93,7 +93,7 @@ export default {
       this.$router.push({
         name: "element",
         params: {
-          id: item.title[0],
+          id: item.book[0].title[0],
           books: this.items[index]
         }
       })

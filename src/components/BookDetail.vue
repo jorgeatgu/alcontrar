@@ -22,50 +22,50 @@
         <div class="card-details-left">
           <img
             class="card-details-image"
-            :src="booksItems.image_url[0]"
+            :src="booksItems.book[0].image_url[0]"
           >
           <div class="card-detials-left-text">
-            <span class="card-details-average">Puntuación <strong>{{ booksItems.average_rating[0] }}</strong></span>
+            <span class="card-details-average">Puntuación <strong>{{ booksItems.book[0].average_rating[0] }}</strong></span>
             <span
-              v-if="booksItems.num_pages[0] !== ''"
+              v-if="booksItems.book[0].num_pages[0] !== ''"
               class="card-details-pag"
             >
               <strong>
-                {{ booksItems.num_pages[0] }}
+                {{ booksItems.book[0].num_pages[0] }}
               </strong>
               páginas
             </span>
             <span
-              v-if="booksItems.publication_year[0] !== ''"
+              v-if="booksItems.book[0].publication_year[0] !== ''"
               class="card-details-year"
             >
               Publicado en
               <strong>
-                {{ booksItems.publication_year[0] }}
+                {{ booksItems.book[0].publication_year[0] }}
               </strong>
             </span>
           </div>
         </div>
         <div class="card-details-right">
           <h2
-            v-if="booksItems.title[0] !== ''"
+            v-if="booksItems.book[0].title[0] !== ''"
             class="card-details-title"
           >
-            {{ booksItems.title[0] }}
+            {{ booksItems.book[0].title[0] }}
           </h2>
           <span
-            v-if="booksItems.authors[0].author[0].name[0] !== ''"
+            v-if="booksItems.book[0].authors[0].author[0].name[0] !== ''"
             class="card-details-autor"
           >
-            {{ booksItems.authors[0].author[0].name[0] }}
+            {{ booksItems.book[0].authors[0].author[0].name[0] }}
           </span>
           <span
-            v-if="booksItems.description[0] !== ''"
+            v-if="booksItems.book[0].description[0] !== ''"
           >
             <!-- eslint-disable vue/no-v-html -->
             <p
               class="card-details-description"
-              v-html="booksItems.description[0]"
+              v-html="booksItems.book[0].description[0]"
             />
           </span>
         </div>

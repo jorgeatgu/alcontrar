@@ -147,7 +147,7 @@ export default {
         }
       }
 
-      const url = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/review/list/${this.userGoodReads}.xml?key=${this.key}&v=2&v=2&shelf=ALL&page=1&per_page=200`
+      const url = `https://jorgeatgu-cors.herokuapp.com/https://www.goodreads.com/review/list/${this.userGoodReads}.xml?key=${this.key}&v=2&v=2&shelf=ALL&page=1&per_page=200`
 
       axios
         .get(
@@ -160,7 +160,7 @@ export default {
             if (err) {
               console.error(err)
             } else {
-              this.items = result
+              this.items = result.GoodreadsResponse.reviews[0].review
               console.log("this.items", this.items);
               this.setItems()
             }
@@ -178,7 +178,7 @@ export default {
         }
       }
 
-      const userUrl = `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/user/show/${this.userGoodReads}.xml?key=${this.key}`
+      const userUrl = `https://jorgeatgu-cors.herokuapp.com/https://www.goodreads.com/user/show/${this.userGoodReads}.xml?key=${this.key}`
       axios
         .get(
             userUrl,
