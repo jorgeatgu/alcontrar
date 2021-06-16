@@ -155,13 +155,13 @@ export default {
             config
         )
         .then(response => {
-          console.log(response.data)
           parseString(response.data, (err, result) => {
             if (err) {
               console.error(err)
             } else {
-              this.items = result.GoodreadsResponse.reviews[0].review
-              console.log("this.items", this.items);
+              this.items = result.GoodreadsResponse.reviews[0].review.filter(item => item.shelves[0].shelf[0].$.name === 'to-read')
+
+
               this.setItems()
             }
           })
@@ -206,7 +206,6 @@ export default {
       this.userData = [this.userGoodReads, this.selected]
     },
     getUser(userId) {
-      console.log("getUser -> userId", userId)
       this.userGoodReads = userId
     },
     selectCity(city) {

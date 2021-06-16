@@ -30,7 +30,7 @@ export default {
     buyMeACoffee.setAttribute('data-cfasync', 'false')
     buyMeACoffee.setAttribute('data-id', 'jorgeatgu')
     buyMeACoffee.setAttribute('data-descritption', 'Support me on Buy me a coffee!')
-    buyMeACoffee.setAttribute('data-message', 'Puedes apoyar mis proyectos aquí. Gracias! :)')
+    buyMeACoffee.setAttribute('data-message', 'Aquí puedes apoyar mis proyectos. Gracias! :)')
     buyMeACoffee.setAttribute('data-color', '#79D6B5')
     buyMeACoffee.setAttribute('data-position', 'Right')
     buyMeACoffee.setAttribute('data-x_margin', '18')
